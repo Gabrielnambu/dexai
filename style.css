@@ -1,0 +1,285 @@
+@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pixelify Sans';
+}
+
+body {
+    text-align: center;
+    background: linear-gradient(to bottom, rgb(115, 191, 241), white);
+    min-height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+main {
+    display: inline-block;
+    margin-top: 2%;
+    padding: 15px;
+    position: relative;
+}
+
+.pokedex {
+    width: 100%;
+    max-width: 425px;
+    
+}
+
+.pokemon_image{
+    position: absolute;
+    bottom: 55%;
+    left: 50%;
+    transform: translate(-63%, 20%);
+    height: 18%;
+}
+
+.pokemon_data {
+    position: absolute;
+    font-weight: 600;
+    color: #8c919e;
+    top: 54.5%;
+    right: 27%;
+    font-size: clamp(8px, 5vw, 25px);
+}
+
+.pokemon_name {
+    color: rgb(53, 53, 53);
+    text-transform: capitalize;
+}
+
+.form {
+    position: absolute;
+    width: 65%;
+    top: 65%;
+    left: 13.5%;
+}
+
+.input_search {
+    width: 100%;
+    padding: 4%;
+    outline: none;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-weight: 600;
+    color: #aaa;
+    font-size: clamp(8px, 5vw, 1rem);
+    box-shadow: -3px 4px 0 #888, -5px 7px 0 #333;
+}
+
+.buttons {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    width: 65%;
+    transform: translate(-57%,0);
+    display: flex;
+    gap: 20px;
+}
+
+.button {
+    width: 50%;
+    padding: 3%;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: clamp(8px, 5vw, 1rem);
+    font-weight: 600;
+    color: white;
+    background: #444;
+    box-shadow: -2px 3px 0 #222, -4px 6px 0 #000;
+}
+
+.button:active {
+    box-shadow: inset -4px 4px 0 #222;
+    font-size: 0.9rem;
+}
+
+.chat-panel {
+    width: 340px;
+    max-width: 90vw;
+    margin-top: 2%;
+    background: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    box-shadow: -4px 6px 0 #333;
+    display: flex;
+    flex-direction: column;
+    height: 550px;
+    max-height: 80vh;
+    overflow: hidden;
+    text-align: left;
+}
+
+.chat-header {
+    background: #d43333;
+    color: white;
+    font-weight: 600;
+    padding: 12px 14px;
+    font-size: clamp(10px, 3vw, 1rem);
+    border-bottom: 2px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.chat-key-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 2px 6px;
+}
+
+.chat-key-btn:hover {
+    opacity: 0.8;
+}
+
+.chat-key-setup {
+    padding: 12px 14px;
+    background: #fff8e1;
+    border-bottom: 2px solid black;
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.chat-key-setup.visible {
+    display: flex;
+}
+
+.chat-key-setup p {
+    font-size: clamp(9px, 2.5vw, 0.85rem);
+    line-height: 1.4;
+    color: #444;
+}
+
+.chat-key-setup a {
+    color: #d43333;
+    font-weight: 600;
+}
+
+.chat-key-row {
+    display: flex;
+    gap: 6px;
+}
+
+.chat-key-input {
+    flex: 1;
+    padding: 8px;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: clamp(9px, 2.5vw, 0.85rem);
+    outline: none;
+}
+
+.chat-key-save {
+    padding: 8px 12px;
+    border: 2px solid black;
+    border-radius: 5px;
+    background: #444;
+    color: white;
+    font-weight: 600;
+    font-size: clamp(9px, 2.5vw, 0.85rem);
+    cursor: pointer;
+}
+
+.chat-key-save:active {
+    background: #222;
+}
+
+.chat-key-setup small {
+    color: #777;
+    font-size: clamp(8px, 2vw, 0.75rem);
+    line-height: 1.3;
+}
+
+.chat-header strong {
+    text-transform: capitalize;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: #f4f6f8;
+}
+
+.chat-message {
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: clamp(9px, 2.5vw, 0.9rem);
+    line-height: 1.4;
+    max-width: 85%;
+    word-wrap: break-word;
+    white-space: pre-line;
+}
+
+.chat-message.user {
+    align-self: flex-end;
+    background: #444;
+    color: white;
+    border-bottom-right-radius: 0;
+}
+
+.chat-message.ai {
+    align-self: flex-start;
+    background: #e2e2e2;
+    color: rgb(53, 53, 53);
+    border-bottom-left-radius: 0;
+}
+
+.chat-message.ai.loading {
+    font-style: italic;
+    color: #888;
+}
+
+.chat-message.ai.error {
+    background: #ffd6d6;
+    color: #7a1c1c;
+}
+
+.chat-form {
+    display: flex;
+    border-top: 2px solid black;
+}
+
+.chat-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+    font-size: clamp(9px, 2.5vw, 0.9rem);
+    font-weight: 600;
+    color: #333;
+}
+
+.chat-send {
+    padding: 10px 14px;
+    border: none;
+    border-left: 2px solid black;
+    background: #444;
+    color: white;
+    font-weight: 600;
+    font-size: clamp(9px, 2.5vw, 0.9rem);
+    cursor: pointer;
+}
+
+.chat-send:active {
+    background: #222;
+}
+
+.chat-send:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
