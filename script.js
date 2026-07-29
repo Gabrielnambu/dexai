@@ -6,7 +6,7 @@ const input = document.querySelector('.input_search');
 const buttonPrev = document.querySelector('.btn-prev');
 const buttonNext = document.querySelector('.btn-next');
 let searchpokemon = 1;
-const MAX_POKEMON = 1025;
+const MAX_POKEMON = 1021;
 
 // ---------- Chat com IA (Gemini) ----------
 // Cada pessoa que usar esse projeto cola a própria chave da API do Gemini
@@ -27,8 +27,9 @@ const chatKeySetup = document.querySelector('.chat-key-setup');
 const chatKeyInput = document.querySelector('.chat-key-input');
 const chatKeySave = document.querySelector('.chat-key-save');
 
-let currentPokemonData = null;
+let currentPokemonData = null; 
 let chatHistory = []; 
+
 function getGeminiApiKey() {
     return localStorage.getItem(GEMINI_KEY_STORAGE) || "";
 }
@@ -41,7 +42,6 @@ function toggleKeySetup(forceShow) {
     const shouldShow = forceShow !== undefined ? forceShow : !chatKeySetup.classList.contains('visible');
     chatKeySetup.classList.toggle('visible', shouldShow);
 }
-
 
 if (!getGeminiApiKey()) {
     toggleKeySetup(true);
@@ -75,7 +75,7 @@ const renderPokemon = async(pokemon) => {
     pokemonName.innerHTML = "Loading..."
     const data = await fetchpokemon(pokemon);
 
-    if (data){
+    if (data && data.id <= MAX_POKEMON){
     pokemonImage.style.display = '';
     pokemonName.innerHTML = data.name;
     pokemonNumber.innerHTML = data.id;
@@ -85,14 +85,14 @@ const renderPokemon = async(pokemon) => {
 
     // atualiza o contexto usado pelo chat de IA
     currentPokemonData = data;
-    chatHistory = [];n
+    chatHistory = []; 
     chatMessages.innerHTML = "";
     chatCurrentPokemon.textContent = data.name;
     addChatMessage(`Pode perguntar o que quiser sobre ${capitalize(data.name)}!`, 'ai');
     } else {
         pokemonImage.style.display = 'none';
         pokemonNumber.innerHTML = ""
-        pokemonName.innerHTML = "Not Found :("
+        pokemonName.innerHTML = "Não encontrado :("
 
         currentPokemonData = null;
         chatCurrentPokemon.textContent = "-";
@@ -131,7 +131,7 @@ buttonNext.addEventListener('click', () => {
 renderPokemon(searchpokemon)
 
 
-// Parte do chat
+// Parte do Chat
 
 function addChatMessage(text, role, extraClass = "") {
     const msgEl = document.createElement('div');
@@ -144,7 +144,7 @@ function addChatMessage(text, role, extraClass = "") {
 }
 
 function buildPokemonContext(data) {
-    
+
     const types = data.types.map(t => t.type.name).join(', ');
     const abilities = data.abilities.map(a => a.ability.name).join(', ');
     const moves = data.moves.slice(0, 20).map(m => m.move.name).join(', ');
@@ -179,6 +179,7 @@ async function askGemini(question) {
 Dados do Pokémon atual:
 ${context}`;
 
+    
     const contents = [
         ...chatHistory,
         { role: "user", parts: [{ text: question }] }
@@ -200,7 +201,6 @@ ${context}`;
         const errorData = await response.json().catch(() => null);
         let message = errorData?.error?.message || `Erro ${response.status} ao consultar a IA.`;
 
-        
         if (response.status === 400 || response.status === 403) {
             toggleKeySetup(true);
             message += " Verifique se a chave configurada está correta.";
@@ -240,7 +240,7 @@ chatForm.addEventListener('submit', async (event) => {
     try {
         const answer = await askGemini(question);
 
-    
+        // atualiza o histórico para dar contexto às próximas perguntas
         chatHistory.push({ role: "user", parts: [{ text: question }] });
         chatHistory.push({ role: "model", parts: [{ text: answer }] });
 
